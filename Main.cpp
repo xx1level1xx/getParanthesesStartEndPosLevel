@@ -66,6 +66,6 @@ int** getParanthesesStartEndPosLevel(string expression, int& num){
 			}
 		}
 	}
-	//consecutively same level //search for the end of parantheses pair, slow cauz I had studied many important things like Biology and still remember without much factorization and the corresponding level is the same or not. I did not have time to think clearly and I had to recall somehow after two to five years.
+	//consecutively same level //search for the end of parantheses pair, slow cauz I had studied many important things like Biology and still remember without much factorization and the corresponding level is the same or not. I did not have time to think clearly and I had to recall somehow after two to five years. Then just be careful like a cyclopse.
 	return paranthesesStartEndPos;
 }
