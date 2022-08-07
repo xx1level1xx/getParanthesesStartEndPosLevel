@@ -2,7 +2,6 @@
 #include<cstdlib>
 #include<string>
 using namespace std;
-//arrays of string plus (array of algebraic sums of products expressions)
 int** getParanthesesStartEndPosLevel(string, int&);
 int main(){
 	string expression = "(()(()(())))";
