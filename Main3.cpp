@@ -6,18 +6,19 @@ using namespace std;
 int** getParanthesesStartEndPosLevel(string, int&);
 int main(){
 	string expression = "(()(()(()))())";
-	expression = "()(())";
+	//expression = "()(())";
 	int num = 0;
 	int** pos = getParanthesesStartEndPosLevel(expression, num);
-	for (int i = 0; i < 4; i++){
+	for (int i = 0; i < 3; i++){
 		for (int j = 0; j < num; j++){
 			cout << pos[i][j] << " ";
 		}
 		cout << endl;
 	}
-	for (int i = 0; i < 4; i++){
+	for (int i = 0; i < 3; i++){
 		delete[] pos[i];
 	}
+	delete[] pos;
 	system("pause");
 	return 0;
 }
@@ -31,49 +32,50 @@ int** getParanthesesStartEndPosLevel(string expression, int& num){
 		}
 	}
 	num = count;
-	int** paranthesesStartEndPos = new int*[4];
-	for (int i = 0; i < 4; i++){
+	int** paranthesesStartEndPos = new int*[3];
+	for (int i = 0; i < 3; i++){
 		paranthesesStartEndPos[i] = new int[count];
 	}
-	bool found = true;
-	count = 0;
 	int foundCount = 0;
-	int saved = 0;
-	int numClosedParanthesesPassedBy = 0;
+	count = 0;
+	int saved = -1;
 	int count2 = 0;
+	int count3 = 0;
+	bool found = true;
+	bool first = true;
 	for (int i = 0; i < expression.length(); i++){
-		cout << i << " ";
 		if (expression[i] == '('){
-			if (found){
+			if (found == true){
 				saved = i;
-				paranthesesStartEndPos[3][count] = count2;
-				count2++;
 			}
-			found = false;
 			foundCount++;
+			found = false;
+			if (first == true){
+				paranthesesStartEndPos[2][count3] = count2;
+				count2++;
+				count3++;
+			}
 		}
 		else if (expression[i] == ')'){
-			if (found){
-				numClosedParanthesesPassedBy++;
-			}
-			else if (found == false){
+			if (found == false){
 				foundCount--;
 				if (foundCount == 0){
-					count2--;
-					found = true;
-					paranthesesStartEndPos[1][count] = i;
 					paranthesesStartEndPos[0][count] = saved;
-					paranthesesStartEndPos[2][count] = level - numClosedParanthesesPassedBy;
+					paranthesesStartEndPos[1][count] = i;
 					count++;
-					level -= numClosedParanthesesPassedBy;
-					level++;
-					i = saved;
-					if (numClosedParanthesesPassedBy != 0){
-						count2++;
+					if (first != true){
+						i = saved;
+						found = true;
 					}
-					numClosedParanthesesPassedBy = 0;
+					
 				}
 			}
+			count2--;
+		}
+		if (first == true && i + 1 == expression.length()){
+			i = saved;
+			first = false;
+			found = true;
 		}
 	}
 	//consecutively same level //search for the end of parantheses pair and the corresponding level is the same or not
